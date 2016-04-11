@@ -1,0 +1,28 @@
+---
+sudo: required
+dist: trusty
+
+language: python
+
+python:
+  - 2.7
+
+env:
+  - ANSIBLE_VERSION=latest
+  - ANSIBLE_VERSION=2.0.0
+  - ANSIBLE_VERSION=1.9.4
+
+install:
+  # Install Ansible.
+  - if [ "$ANSIBLE_VERSION" = "latest" ]; then pip install ansible; else pip install ansible==$ANSIBLE_VERSION; fi
+  - gem install serverspec
+
+script:
+  - mkdir -p tests/roles/
+  - sudo ln -s $TRAVIS_BUILD_DIR tests/roles/ansible-role-platinumsearcher
+  - ansible-playbook --syntax-check -i tests/inventory tests/test.yml --connection=local
+  - ansible-playbook -i tests/inventory tests/test.yml --sudo --connection=local -vvvv
+  - cd tests/ && rake spec
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/
