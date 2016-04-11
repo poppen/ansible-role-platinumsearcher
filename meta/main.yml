@@ -7,5 +7,7 @@ galaxy_info:
     - name: GenericLinux
       versions:
       - all
-  categories:
+  galaxy_tags:
     - development
+    - system
+  dependencies: []
