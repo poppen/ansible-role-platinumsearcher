@@ -5,6 +5,15 @@ ansible-role-platinumsearcher
 
 Install latest [the platinum searcher](https://github.com/monochromegane/the_platinum_searcher) on Linxu amd64.
 
+Example Playbook
+--------
+
+```yaml
+- hosts: server
+  roles:
+    - { role: poppen.platinumsearcher }
+```
+
 License
 -------
 
