@@ -1,0 +1,26 @@
+box: poppen/trusty-ansible-serverspec:2.0
+build:
+  steps:
+    - capgemini/ansible-lint:
+        playbook: "tasks/*.yml"
+    - script:
+        name: Prepare roles path
+        code: |
+          mkdir -p tests/roles/
+          ln -s $WERCKER_ROOT tests/roles/$WERCKER_APPLICATION_NAME
+    - script:
+        name: Check syntax
+        code: |
+          ansible-playbook --syntax-check -i tests/inventory tests/test.yml --connection=local
+    - script:
+        name: Run ansible
+        code: |
+          ansible-playbook -i tests/inventory tests/test.yml -c local
+    - script:
+        name: Run servespec
+        cwd: tests/
+        code: |
+          rake spec
+  after-steps:
+    - slack-notifier:
+        url: $SLACK_URL
