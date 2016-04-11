@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  author: poppen <poppen.jp@gmail.com>
+  description: Install latest "the platinum searcher" on Linxu amd64
+  license: BSD
+  platforms:
+    - name: GenericLinux
+      versions:
+      - all
+  categories:
+    - development
